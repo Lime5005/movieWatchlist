@@ -8,10 +8,20 @@ import java.util.List;
 
 public class WatchlistService {
     WatchlistRepository watchlistRepository = new WatchlistRepository();
+    // Get the rating from API, if rating exists, replace any input with it.
+    MovieRatingService movieRatingService = new MovieRatingService();
 
     // If the controller class need to call it, then ask it to get from this service.
     public List<WatchlistItem> getWatchlistItems() {
-        return watchlistRepository.getList();
+        List<WatchlistItem> watchlistItems = watchlistRepository.getList();
+        for (WatchlistItem watchlistItem : watchlistItems) {
+            String rating = movieRatingService.getMovieRating(watchlistItem.getTitle());
+            if (rating != null) {
+                watchlistItem.setRating(rating);
+            }
+        }
+
+        return watchlistItems;
     }
 
     public int getWatchlistItemsSize() {
