@@ -3,15 +3,27 @@ package com.openclassrooms.watchlist.service;
 import com.openclassrooms.watchlist.domain.WatchlistItem;
 import com.openclassrooms.watchlist.exception.DuplicateTitleException;
 import com.openclassrooms.watchlist.repository.WatchlistRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WatchlistService {
-    WatchlistRepository watchlistRepository = new WatchlistRepository();
-    // Get the rating from API, if rating exists, replace any input with it.
-    MovieRatingService movieRatingService = new MovieRatingService();
+    // How to loss coupling these 2 dependencies from this service for unit test?
+    // @Autowired, @Service, Inject into the constructor as Spring beans: bean to bean.
 
-    // If the controller class need to call it, then ask it to get from this service.
+    WatchlistRepository watchlistRepository;
+    // Get the rating from API, if rating exists, replace any input with it.
+    MovieRatingService movieRatingService;
+
+    @Autowired
+    public WatchlistService(WatchlistRepository watchlistRepository, MovieRatingService movieRatingService) {
+        super();
+        this.watchlistRepository = watchlistRepository;
+        this.movieRatingService = movieRatingService;
+    }
+
     public List<WatchlistItem> getWatchlistItems() {
         List<WatchlistItem> watchlistItems = watchlistRepository.getList();
         for (WatchlistItem watchlistItem : watchlistItems) {

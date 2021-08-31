@@ -2,11 +2,13 @@ package com.openclassrooms.watchlist.service;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Properties;
 
+@Service
 public class MovieRatingService {
 
     public String getMovieRating(String title) {
