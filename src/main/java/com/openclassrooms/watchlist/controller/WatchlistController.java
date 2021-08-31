@@ -2,7 +2,10 @@ package com.openclassrooms.watchlist.controller;
 
 import com.openclassrooms.watchlist.domain.WatchlistItem;
 import com.openclassrooms.watchlist.exception.DuplicateTitleException;
+import com.openclassrooms.watchlist.service.MovieRatingServiceImpl;
 import com.openclassrooms.watchlist.service.WatchlistService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,8 @@ import java.util.Map;
 
 @Controller
 public class WatchlistController {
+    private final Logger logger = LoggerFactory.getLogger(WatchlistController.class);
+
     private final WatchlistService watchlistService;
 
     @Autowired
@@ -28,6 +33,7 @@ public class WatchlistController {
 
     @GetMapping("/watchlistItemForm")
     public ModelAndView showWatchlistItemForm(@RequestParam(required = false) Integer id) {
+        logger.info("HTTP GET request received at /watchlistItemForm URL.");
         String viewName = "watchlistItemForm";
         Map<String, Object> model = new HashMap<>();
         WatchlistItem watchlistItem = watchlistService.findWatchlistItemById(id);
@@ -42,6 +48,7 @@ public class WatchlistController {
     @PostMapping("/watchlistItemForm")
     public ModelAndView submitWatchlistFrom(@Valid WatchlistItem watchlistItem, BindingResult bindingResult) {
         // If valid is not fully accomplished, return a blank form:
+        logger.info("HTTP POST request received at /watchlistItemForm URL.");
         if (bindingResult.hasErrors()) {
             return new ModelAndView("watchlistItemForm");
         }
@@ -60,6 +67,7 @@ public class WatchlistController {
 
     @GetMapping("/watchlist")
     public ModelAndView getWatchlist() {
+        logger.info("HTTP GET request received at /watchlist URL.");
         String viewName = "watchlist";
         Map<String, Object> model = new HashMap<>();
         model.put("watchlistItems", watchlistService.getWatchlistItems());
