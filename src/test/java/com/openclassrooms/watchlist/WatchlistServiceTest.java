@@ -3,6 +3,7 @@ package com.openclassrooms.watchlist;
 import com.openclassrooms.watchlist.domain.WatchlistItem;
 import com.openclassrooms.watchlist.repository.WatchlistRepository;
 import com.openclassrooms.watchlist.service.MovieRatingService;
+import com.openclassrooms.watchlist.service.MovieRatingServiceImpl;
 import com.openclassrooms.watchlist.service.WatchlistService;
 import org.junit.Assert;
 import org.junit.Test;
