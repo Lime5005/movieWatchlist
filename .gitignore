@@ -33,3 +33,5 @@ build/
 .vscode/
 apiurl.properties
 watchlist-app.log
+.DS_Store
+src/.DS_Store
